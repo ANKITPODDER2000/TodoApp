@@ -1,7 +1,7 @@
 const express               = require('express'),
       app                   = express(),
       bodyParser            = require("body-parser"),
-      flash                 = require('flash'),
+      flash                 = require('connect-flash'),
       mongoose              = require('mongoose'),
       passport              = require("passport"),
       LocalStrategy         = require("passport-local"),
@@ -46,7 +46,6 @@ app.use(require('express-session')({
     resave: false,
     saveUninitialized: false,
 }));
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -63,8 +62,12 @@ app.use(bodyParser.urlencoded({
     extended: true,
 }))
 
+app.use(flash());
+
 app.use(function(req,res,next){
-  res.locals.currentUser = req.user;
+  res.locals.currentUser        = req.user;
+  res.locals.error              = req.flash('error');
+  res.locals.success            = req.flash('success');
   next();
 })
 
@@ -90,6 +93,7 @@ app.post("/signin", (req, res) => {
     var userName = new User({ username: req.body.username });
     User.register(userName, req.body.password, function (error, user) {
         if (error) {
+            req.flash("error",error.message);
             res.redirect("/");
         } else {
             passport.authenticate("local")(req, res, function () {
@@ -107,12 +111,14 @@ app.get("/todo/:id", midl, function(req, res){
 
 app.get("/logout", (req, res) => {
     req.logout();
+    req.flash("success","Logout Successfully.");
     res.redirect("/");
 })
 
 app.get("/todo/:id/alltodo",midl, (req, res) => {
     User.findById(req.params.id).populate("todo").exec((err, user) => {
         if (err) {
+            req.flash("error",err.message);
             return res.render("/");
         } else {
             return res.json(user['todo']);
@@ -168,6 +174,7 @@ function midl(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
+    req.flash("error","Sign up First or Log in.");
     res.redirect("/signin");
 }
 

@@ -25,7 +25,21 @@
         <%}%>
     </nav>
 
+    
+
     <section id="main">
+        <div class="alert">
+            <% if(error && error.length>0){ %>
+                <div class="alert-alert-danger">
+                     <p><%= error %></p>
+                </div>
+            <% } %>
+            <% if(success && success.length>0){ %>
+                <div class="alert-alert-success">
+                     <p><%= success  %></p>
+                 </div>
+            <% } %>
+        </div>
         <div class="header">
             <h1><span>TODO</span> List.</h1>
             <p>Create you Own <b>Todo.</b></p>

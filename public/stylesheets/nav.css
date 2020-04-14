@@ -11,7 +11,7 @@ nav{
     background: #1d1d1d;
     right: 0;
     top: 0;
-    z-index: 9;
+    z-index: 99;
     transition: 0.7s ease-in-out;
     padding-top: 80px;
     color: #fff;
@@ -68,7 +68,7 @@ nav li:hover i{
     left: -70px;
     width: 50px;
     height: 50px;
-    z-index: 5;
+    z-index: 99;
     cursor: pointer;
     transition: 0.7s;
     border-radius: 50%;
@@ -125,4 +125,36 @@ nav li:hover i{
     #main.active{
         transform : translateX(-220px);
     }
+}
+
+
+.alert .alert-alert-danger{
+  position: absolute;
+  width: 70%;
+  background: red;
+  z-index: 9;
+  left: 10%;
+  top: 30px;
+  color: #C7254E;
+  background: #E9C7C7;
+  padding: 10px;
+  line-height: 20px;
+  font-size: 15px;
+  border: 2px solid #C7254E;
+  border-radius: 5px;
+}
+.alert .alert-alert-success{
+  position: absolute;
+  width: 70%;
+  background: red;
+  z-index: 9;
+  left: 10%;
+  top: 30px;
+  background: #D4EBCA;
+  color: #3C763D;
+  padding: 10px;
+  line-height: 20px;
+  font-size: 15px;
+  border: 2px solid #3C763D;
+  border-radius: 5px;
 }
