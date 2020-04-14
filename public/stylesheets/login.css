@@ -173,3 +173,34 @@ form p a{
         font-size: 11px;
     }
 }
+
+.alert .alert-alert-danger{
+  position: absolute;
+  width: 70%;
+  background: red;
+  z-index: 9;
+  left: 10%;
+  top: 30px;
+  color: #C7254E;
+  background: #E9C7C7;
+  padding: 10px;
+  line-height: 20px;
+  font-size: 15px;
+  border: 2px solid #C7254E;
+  border-radius: 5px;
+}
+.alert .alert-alert-success{
+  position: absolute;
+  width: 70%;
+  background: red;
+  z-index: 9;
+  left: 10%;
+  top: 30px;
+  background: #D4EBCA;
+  color: #3C763D;
+  padding: 10px;
+  line-height: 20px;
+  font-size: 15px;
+  border: 2px solid #3C763D;
+  border-radius: 5px;
+}
