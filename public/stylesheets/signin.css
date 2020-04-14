@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Russo+One&family=Lato:wght@700&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    width: 100%;
+    height: 100%;
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+body{
+    width: 100%;
+    min-height: 100vh;
+}
+.containerBox{
+    position: relative;
+    display: block;
+    width: 80%;
+    padding: 0 10%;
+    min-height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    background: #076585;
+    background: -webkit-linear-gradient(to top, rgba(2, 204, 255, 0.788), #ff08b5c5);
+    background: linear-gradient(to top, rgba(2, 204, 255, 0.788), #ff08b5c5);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.containerBox img{
+    position: relative;
+    width: 450px;
+}
+form{
+    position: relative;
+    width: 400px;
+    height: 370px;
+    background: #0004;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 30px;
+}
+form .inputBox{
+    position: relative;
+    display: block;
+    width: 80%;
+    height: 33px;
+    margin: 17px auto;
+}
+form .inputBox i{
+    position: absolute;
+    right: 15px;
+    bottom: 8px;
+    color: #fff;
+    z-index: 5;
+}
+form .inputBox input{
+    position: relative;
+    display: block;
+    width: calc(100% - 53px);
+    height: 33px;
+    padding: 0 28px 0 15px;
+    background: none;
+    outline: none;
+    border: none;
+    border-bottom: 1.5px solid #fff;
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    z-index: 2;
+}
+form .inputBox label{
+    position: absolute;
+    bottom: 7px;
+    left: 15px;
+    z-index: 1;
+    font-size: 17px;
+    transition: 0.7s;
+    font-family: 'Russo One', sans-serif;
+    letter-spacing: 3px;
+    color: #fff;
+}
+form .inputBox input:focus ~ label,
+form .inputBox input:valid ~ label{
+    bottom: 30px;
+    left: 0;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+form h1{
+    font-family: 'Russo One', sans-serif;
+    color: #fff;
+    letter-spacing: 5px;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    font-size: 28px;
+}
+form button{
+    position: relative;
+    height: 40px;
+    width: 80%;
+    margin-top: 20px;
+    font-family: consolas;
+    background: none;
+    outline: none;
+    border: 1.25px solid #fff;
+    cursor: pointer;
+    color: #fff;
+    font-size: 17px;    
+    transition: 0.5s;
+    letter-spacing: 4px;
+    border-radius: 10px;
+}
+form button:hover{
+    background: #fff;
+    color: #000;
+}
+form p{
+    color: #fff;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+form p a{
+    text-decoration: none;
+    color: black;
+}
+
+
+@media screen and (max-width:1270px)
+{
+    .containerBox{
+        flex-direction: column;
+    }
+    .containerBox img,
+    .containerBox form{
+        margin: 30px 0 !important;
+    }
+    .containerBox form{
+        margin-bottom: 80px !important;
+    }
+}
+@media screen and (max-width:550px)
+{
+    .containerBox{
+        padding: 0;
+        width: 100%;
+    }
+    .containerBox img{
+        width: 280px;
+        margin-bottom: 0;
+    }
+    .containerBox form{
+        width: 100%;
+        border-radius: 0;
+    }
+    .containerBox form h1{
+        font-size: 20px;
+    }
+    .containerBox form .inputBox label{
+        font-size: 14px;
+    }
+    form .inputBox input:focus ~ label,
+    form .inputBox input:valid ~ label{
+        font-size: 11px;
+    }
+}

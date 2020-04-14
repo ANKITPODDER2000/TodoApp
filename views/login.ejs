@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./stylesheets/login.css">
+    <link rel="stylesheet" href="./stylesheets/nav.css">
+    <link rel="stylesheet" href="./icon/css/all.min.css">
+    <title>Login</title>
+</head>
+<body>
+    <nav>
+        <div class="handburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <li><i class="fas fa-home"></i><a href="/">HOME</a></li>
+        <li class="active"><i class="fas fa-user-lock"></i><a href="/login">Log in</a></li>
+        <li><i class="fas fa-sign-out-alt"></i><a href="/signin">Sign In</a></li>
+    </nav>
+
+    <section id="main">
+        <div class="containerBox">
+            <form action="/login" method="post">
+                <h1>Log In</h1>
+                <div class="inputBox">
+                    <input type="text" name="username" id="" required="">
+                    <label for="">Username</label>
+                </div>
+                <div class="inputBox">
+                    <!--<i class="fas fa-eye"></i>-->
+                    <i class="fas fa-eye-slash" onclick="passwordMode()"></i>
+                    <input type="password" name="password" id="" required="">
+                    <label for="">Password</label>
+                </div>
+                <button>SUBMIT</button>
+                <p>Don't have an Account ? <a href="/signin">Sign in</a></p>
+            </form>
+            <img src="./images/login.svg" alt="">
+        </div>
+    </section>
+
+    <script type="text/javascript" src="./jquery.js"></script>
+    <script type="text/javascript">
+        let show = false;
+
+        $('.handburger').click(()=>{
+            $('.handburger').toggleClass('active');
+            $('nav').toggleClass('active');
+            $('#main').toggleClass('active');
+        })
+
+        function passwordMode(){
+            if(show==false){
+                $("#main > div > form > div:nth-child(3) > i").attr("class", "fas fa-eye");
+                $("#main > div > form > div:nth-child(3) input").attr('type', 'text');
+            }else{
+                $("#main > div > form > div:nth-child(3) > i").attr("class", "fas fa-eye-slash");
+                $("#main > div > form > div:nth-child(3) input").attr('type', 'password');
+            }
+            show = !show;
+        }
+    </script>
+</body>
+</html>

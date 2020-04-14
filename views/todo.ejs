@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/todo.css">
+    <link rel="stylesheet" href="/stylesheets/nav.css">
+    <link rel="stylesheet" href="/icon/css/all.min.css">
+    <title>Todo</title>
+</head>
+<body>
+    <nav>
+        <div class="handburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <li><i class="fas fa-home"></i><a href="/">HOME</a></li>
+        <li class="active"><i class="fas fa-clipboard-list"></i><a href="/todo/<%=currentUser['id']%>">TODO</a></li>
+        <li><i class="fas fa-sign-out-alt"></i><a href="/logout">Log out</a></li>
+    </nav>
+
+    <section id="main">
+        <h1><%=currentUser['username']%>'s Todo List</h1>
+        <div class="container">
+            <div class="box1">
+                <div class="input">
+                    <input type="text" id="<%=currentUser['id']%>">
+                    <span onclick="todoSubmit()"><i class="fas fa-plus"></i></span>
+                </div>
+                <div class="btn">
+                    <select name="" id="" onclick="sort()">
+                    <option value="all">All</option>
+                    <option value="com">Completed</option>
+                    <option value="inc">Uncompleted</option>
+                </select>
+                </div>
+            </div>
+
+            <div class="box2"></div>
+        </div>
+    </section>
+
+    
+
+    <script type="text/javascript" src="/jquery.js"></script>
+    <script type="text/javascript">
+        $('.handburger').click(() => {
+            $('.handburger').toggleClass('active');
+            $('nav').toggleClass('active');
+            $('#main').toggleClass('active');
+        })
+
+
+        function todoSubmit(){
+            if($('input').val()==""){
+                console.log("");
+            }
+            else{
+                $.post
+                (`/todo/${$('input').attr('id')}/posttodo`,{data: $('input').val()}).done(data=>{
+                    $('input').val("");
+                })
+            }
+            sort();
+        }
+
+        function deleteTodo(url)
+        {
+            $.get(url).done(data=>{
+                sort();
+            })
+        }
+        function done(url)
+        {
+            $.get(url).done(data => {
+                sort();
+            })
+        }
+        //Show All Todo
+        function showalltodo(){
+            $.get(
+                `/todo/${$('input').attr('id')}/alltodo`
+            ).done(data=>{
+                $('.box2').empty();
+
+                data.forEach(dataGet=>{
+                    str = "";
+                    if(!dataGet['isDone']){
+                        str += `<div class="todo"><div id="content"><div class="todo-do">${dataGet['content'].slice(0, 20)}...</div>`;
+                        str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-times-circle"></i></a><a  onclick="deleteTodo(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
+                    }else{
+                        str += `<div class="todo"><div id="content" class="active"><div class="todo-do">${dataGet['content'].slice(0, 20)}...</div>`;
+                        str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-check-circle"></i></a><a onclick="deleteTodo(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
+                    }
+                    $('.box2').append(str);
+                });
+            })
+        }
+        function sort()
+        {
+            console.log("Call Sort Function");
+            if(document.querySelector("#main > div > div.box1 > div.btn > select").value=='all'){
+                showalltodo();
+            }else if(document.querySelector("#main > div > div.box1 > div.btn > select").value=="com"){
+                $.get(
+                    `/todo/${$('input').attr('id')}/alltodo`
+                ).done(data => {
+                    $('.box2').empty();
+
+                    data.forEach(dataGet => {
+                        str = "";
+                        if (dataGet['isDone'] == true) {
+                            str += `<div class="todo"><div id="content"><div class="todo-do">${dataGet['content'].slice(0, 20)}...</div>`;
+                            str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-check-circle"></i></a><a  onclick="deleteTodo(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
+                        }
+                        $('.box2').append(str);
+                    });
+                })
+            }else{
+                $.get(
+                    `/todo/${$('input').attr('id')}/alltodo`
+                ).done(data => {
+                    $('.box2').empty();
+
+                    data.forEach(dataGet => {
+                        str = "";
+                        if(dataGet['isDone'] == false){
+                            str += `<div class="todo"><div id="content"><div class="todo-do">${dataGet['content'].slice(0, 20)}...</div>`;
+                            str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-times-circle"></i></a><a  onclick="deleteTodo(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
+                        }
+                        $('.box2').append(str);
+                    });
+                })
+            }
+
+        }
+        sort();
+    </script>
+</body>
+</html>
