@@ -22,16 +22,16 @@
 
     <section id="main">
         <div class="alert">
-          <% if(error && error.length>0){ %>
-          <div class="alert alert-danger">
-            <p><%= error %></p>
-          </div>
-          <% } %>
-          <% if(success && success.length>0){ %>
-          <div class="alert alert-success">
-            <p><%= success  %></p>
-          </div>
-          <% } %>
+              <% if(error && error.length>0){ %>
+              <div class="alert alert-danger" style="position: absolute;width: 70%;background: red;z-index: 9;left: 10%;top: 30px;color: #C7254E;background: #E9C7C7;padding: 10px;line-height: 20px;font-size: 15px;border: 2px solid #C7254E;border-radius: 5px;">
+                <p><%= error %></p>
+              </div>
+              <% } %>
+              <% if(success && success.length>0){ %>
+              <div class="alert alert-success" style="position: absolute;width: 70%;background: red;z-index: 9;left: 10%;top: 30px;color: #3C763D;background: #D4EBCA;padding: 10px;line-height: 20px;font-size: 15px;border: 2px solid #3C763D;border-radius: 5px;">
+                <p><%= success  %></p>
+              </div>
+              <% } %>
         </div>
         <div class="containerBox">
             <form action="/login" method="post">
