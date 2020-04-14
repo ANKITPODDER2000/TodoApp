@@ -18,7 +18,7 @@
         <li class="active"><i class="fas fa-home"></i><a href="/">HOME</a></li>
         <%if(!currentUser){%>
             <li><i class="fas fa-user-lock"></i><a href="/login">Log in</a></li>
-            <li><i class="fas fa-sign-out-alt"></i><a href="/signin">Sign In</a></li>
+            <li><i class="fas fa-sign-out-alt"></i><a href="/signin">Sign Up</a></li>
         <%}else{%>
             <li><i class="fas fa-clipboard-list"></i><a href="/todo/<%=currentUser['id']%>">Todo</a></li>
             <li><i class="fas fa-sign-out-alt"></i><a href="/logout">Log Out</a></li>
@@ -31,7 +31,7 @@
             <p>Create you Own <b>Todo.</b></p>
             <div class="btn">
                 <a href="/login">Log in</a>
-                <a href="/signin">Sign in</a>
+                <a href="/signin">Sign Up</a>
             </div>
         </div>
     </section>
