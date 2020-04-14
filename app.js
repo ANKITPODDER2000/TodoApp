@@ -6,7 +6,7 @@ const express               = require('express'),
       passport              = require("passport"),
       LocalStrategy         = require("passport-local"),
       passportLocalMongoose = require('passport-local-mongoose'),
-      PORT                  = process.env.PORT || 8080;
+      PORT                  = process.env.PORT  || 8080;
 
 //==========================================================================================//
 let todoSchema = new mongoose.Schema({
