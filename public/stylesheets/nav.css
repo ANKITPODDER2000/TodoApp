@@ -22,7 +22,7 @@ nav.active{
 nav img{
   position: relative;
   width: 150px;
-  max-height: 150px;
+  height: 150px;
   display: block;
   margin:  0 auto;
   border-radius: 50%;
@@ -171,13 +171,15 @@ nav li:hover i{
 }
 #name{
   word-break: keep-all;
-  font-size: 14px;
+  font-size: 14px !important;
   position: relative;
   max-width: 85%;
   text-align: center;
-  transform: scale(1);
+  transform: scale(1) !important;
   display: block;
   margin: 0 auto 20px;
+  font-family: 'Poppins';
+  letter-spacing: 2px !important;
 }
 nav div{
   position: relative;

@@ -33,17 +33,17 @@ User = new mongoose.model("User", UserSchema);
 //==========================================================================================//
 
 
-//link->mongodb+srv://ap:<password>@cluster0-v5cee.mongodb.net/test?retryWrites=true&w=majority
+//link->mongodb+srv://ankit:<password>@cluster0-vylte.mongodb.net/test?retryWrites=true&w=majority
+/*
 mongoose.connect("mongodb://localhost/TodoAppList", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-/*
-mongoose.connect("mongodb+srv://ankit:1234@cluster0-v5cee.mongodb.net/test?retryWrites=true&w=majority", {
+*/
+mongoose.connect("mongodb+srv://ankit:1234@cluster0-vylte.mongodb.net/test?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
-*/
 
 let Stroage = multer.diskStorage({
     destination : "./public/uploads/",
@@ -197,7 +197,7 @@ app.post("/todo/:userid/updates",midl,upload,(req,res)=>{
         user['photo'] = req.file.filename;
         user.save();
         //console.log(user);
-        res.redirect("/todo/"+req.params.userid)
+        res.redirect("/todo/"+req.params.userid);
     })
 })
 

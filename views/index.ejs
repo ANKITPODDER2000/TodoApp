@@ -15,6 +15,15 @@
             <span></span>
             <span></span>
         </div>
+        <%if(currentUser){%>
+            <div>
+                <img src="/uploads/<%=currentUser['photo']%>">
+                <form action="/todo/<%=currentUser['id']%>/updates" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="file" id="realfile" accept="image/*" onchange="fileupload()">
+                </form>
+            </div>
+            <h1 id="name">Welcome <%=currentUser['username']%></h1>
+        <%}%>
         <li class="active"><i class="fas fa-home"></i><a href="/">HOME</a></li>
         <%if(!currentUser){%>
             <li><i class="fas fa-user-lock"></i><a href="/login">Log in</a></li>
@@ -58,6 +67,10 @@
             $('nav').toggleClass('active');
             $('#main').toggleClass('active');
         })
+
+        function fileupload(){
+            document.querySelector("body > nav > div:nth-child(2) > form").submit();
+        }
     </script>
 </body>
 </html>
