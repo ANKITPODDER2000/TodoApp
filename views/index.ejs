@@ -52,10 +52,12 @@
         <div class="header">
             <h1><span>TODO</span> List.</h1>
             <p>Create you Own <b>Todo.</b></p>
-            <div class="btn">
-                <a href="/login">Log in</a>
-                <a href="/signin">Sign Up</a>
-            </div>
+            <%if(!currentUser){%>
+                <div class="btn">
+                    <a href="/login">Log in</a>
+                    <a href="/signin">Sign Up</a>
+                </div>
+            <% } %>
         </div>
     </section>
 
