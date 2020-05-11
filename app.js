@@ -6,6 +6,8 @@ const express               = require('express'),
       passport              = require("passport"),
       LocalStrategy         = require("passport-local"),
       passportLocalMongoose = require('passport-local-mongoose'),
+      multer                = require('multer'),
+      path                  = require('path'),
       PORT                  = process.env.PORT  || 8080;
 
 //==========================================================================================//
@@ -22,24 +24,37 @@ let UserSchema = new mongoose.Schema({
     todo: [{
         type: mongoose.Schema.Types.ObjectId,
         ref : "Todo"
-    }]
+    }],
+    photo : String,
 });
 
 UserSchema.plugin(passportLocalMongoose);
 User = new mongoose.model("User", UserSchema);
 //==========================================================================================//
 
-/*
-link->mongodb+srv://ap:<password>@cluster0-v5cee.mongodb.net/test?retryWrites=true&w=majority
+
+//link->mongodb+srv://ap:<password>@cluster0-v5cee.mongodb.net/test?retryWrites=true&w=majority
 mongoose.connect("mongodb://localhost/TodoAppList", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-});*/
-
+});
+/*
 mongoose.connect("mongodb+srv://ankit:1234@cluster0-v5cee.mongodb.net/test?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
+*/
+
+let Stroage = multer.diskStorage({
+    destination : "./public/uploads/",
+    filename : (req,file,cb) =>{
+        cb(null,file.fieldname+"_"+Date.now()+path.extname(file.originalname));
+    }
+});
+
+var upload = multer({
+    storage : Stroage
+}).single('file');
 
 app.use(require('express-session')({
     secret: "Rusty is a Good Dog.",
@@ -89,13 +104,16 @@ app.post("/login",passport.authenticate("local",
   }),(req,res)=>{
   res.redirect("/todo/"+req.user["id"]);
 })
-app.post("/signin", (req, res) => {
+app.post("/signin",upload, (req, res) => {
     var userName = new User({ username: req.body.username });
     User.register(userName, req.body.password, function (error, user) {
         if (error) {
             req.flash("error",error.message);
             res.redirect("/");
         } else {
+            user['photo'] = req.file.filename;
+            user.save();
+            console.log(user);
             passport.authenticate("local")(req, res, function () {
                 res.redirect("/todo/" + user['id']);
             });
@@ -109,7 +127,7 @@ app.get("/todo/:id", midl, function(req, res){
     res.render("todo");
 });
 
-app.get("/logout", (req, res) => {
+app.get("/logout", midl,(req, res) => {
     req.logout();
     req.flash("success","Logout Successfully.");
     res.redirect("/");
@@ -148,7 +166,7 @@ app.post("/todo/:id/posttodo", midl, (req, res) => {
     });
 })
 
-app.get("/todo/:userid/:todoid/done", (req, res) => {
+app.get("/todo/:userid/:todoid/done",midl,(req, res) => {
     Todo.findById(req.params.todoid, (err,todo) => {
         if (err) {
             res.json(false)
@@ -160,13 +178,26 @@ app.get("/todo/:userid/:todoid/done", (req, res) => {
     })
 })
 
-app.get("/todo/:userid/:todoid/deleteTodo", (req, res) => {
+app.get("/todo/:userid/:todoid/deleteTodo",midl,(req, res) => {
     Todo.findByIdAndRemove(req.params.todoid, (err) => {
         if (err) {
             res.json(false)
         } else {
             res.json(true);
         }
+    })
+})
+
+app.post("/todo/:userid/updates",midl,upload,(req,res)=>{
+    User.findById(req.params.userid,(err,user)=>{
+        if(err){
+            return res.redirect(back);
+        }
+        //console.log(user['photo']);
+        user['photo'] = req.file.filename;
+        user.save();
+        //console.log(user);
+        res.redirect("/todo/"+req.params.userid)
     })
 })
 

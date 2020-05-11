@@ -13,11 +13,22 @@ nav{
     top: 0;
     z-index: 99;
     transition: 0.7s ease-in-out;
-    padding-top: 80px;
+    padding-top: 30px;
     color: #fff;
 }
 nav.active{
     transform: translateX(0px);
+}
+nav img{
+  position: relative;
+  width: 150px;
+  max-height: 150px;
+  display: block;
+  margin:  0 auto;
+  border-radius: 50%;
+  background: #000000;
+  margin-bottom: 20px;
+  object-fit: contain;
 }
 nav li{
     position: relative;
@@ -157,4 +168,31 @@ nav li:hover i{
   font-size: 15px;
   border: 2px solid #3C763D;
   border-radius: 5px;
+}
+#name{
+  word-break: keep-all;
+  font-size: 14px;
+  position: relative;
+  max-width: 85%;
+  text-align: center;
+  transform: scale(1);
+  display: block;
+  margin: 0 auto 20px;
+}
+nav div{
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto 25px;
+  display: block;
+}
+nav div form input{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  outline: none;
+  opacity: 0;
 }

@@ -40,7 +40,7 @@ body{
 form{
     position: relative;
     width: 400px;
-    height: 370px;
+    min-height: 370px;
     background: #0004;
     display: flex;
     align-items: center;
@@ -88,6 +88,25 @@ form .inputBox label{
     font-family: 'Russo One', sans-serif;
     letter-spacing: 3px;
     color: #fff;
+}
+form .inputBox.upload input{
+    border: none;
+    width: calc(100% - 10px);
+    opacity: 0;
+}
+form .inputBox.upload label{
+    width: calc(100% - 10px);
+    height: 35px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+    background: #000;
+    font-size: 14px;
+    letter-spacing: 1px;
+    word-spacing: 0;
 }
 form .inputBox input:focus ~ label,
 form .inputBox input:valid ~ label{

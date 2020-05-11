@@ -15,6 +15,13 @@
             <span></span>
             <span></span>
         </div>
+        <div>
+            <img src="/uploads/<%=currentUser['photo']%>">
+            <form action="/todo/<%=currentUser['id']%>/updates" method="POST" enctype="multipart/form-data">
+                <input type="file" name="file" id="realfile" accept="image/*" onchange="fileupload()">
+            </form>
+        </div>
+        <h1 id="name">Welcome <%=currentUser['username']%></h1>
         <li><i class="fas fa-home"></i><a href="/">HOME</a></li>
         <li class="active"><i class="fas fa-clipboard-list"></i><a href="/todo/<%=currentUser['id']%>">TODO</a></li>
         <li><i class="fas fa-sign-out-alt"></i><a href="/logout">Log out</a></li>
@@ -25,7 +32,7 @@
         <div class="container">
             <div class="box1">
                 <div class="input">
-                    <input type="text" id="<%=currentUser['id']%>">
+                    <input type="text" id="<%=currentUser['id']%>" class="todo">
                     <span onclick="todoSubmit()"><i class="fas fa-plus"></i></span>
                 </div>
                 <div class="btn">
@@ -53,13 +60,13 @@
 
 
         function todoSubmit(){
-            if($('input').val()==""){
+            if($('input.todo').val()==""){
                 console.log("");
             }
             else{
                 $.post
-                (`/todo/${$('input').attr('id')}/posttodo`,{data: $('input').val()}).done(data=>{
-                    $('input').val("");
+                (`/todo/${$('input.todo').attr('id')}/posttodo`,{data: $('input.todo').val()}).done(data=>{
+                    $('input.todo').val("");
                     if(data==true){
                         sort();
                     }
@@ -86,62 +93,64 @@
         //Show All Todo
         function showalltodo(){
             $.get(
-                `/todo/${$('input').attr('id')}/alltodo`
+                `/todo/${$('input.todo').attr('id')}/alltodo`
             ).done(data=>{
-                $('.box2').empty();
-
+                str = "";
                 data.forEach(dataGet=>{
-                    str = "";
                     if(!dataGet['isDone']){
                         str += `<div class="todo"><div id="content"><div class="todo-do">${dataGet['content'].slice(0, 20)}...</div>`;
-                        str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-times-circle"></i></a><a  onclick="deleteTodo(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
+                        str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input.todo').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-times-circle"></i></a><a  onclick="deleteTodo(\'/todo/${$('input.todo').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
                     }else{
                         str += `<div class="todo"><div id="content" class="active"><div class="todo-do">${dataGet['content'].slice(0, 20)}...</div>`;
-                        str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-check-circle"></i></a><a onclick="deleteTodo(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
+                        str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input.todo').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-check-circle"></i></a><a onclick="deleteTodo(\'/todo/${$('input.todo').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
                     }
-                    $('.box2').append(str);
                 });
+                $('.box2').empty();
+                $('.box2').append(str);
             })
         }
         function sort()
         {
-            console.log("Call Sort Function");
             if(document.querySelector("#main > div > div.box1 > div.btn > select").value=='all'){
                 showalltodo();
             }else if(document.querySelector("#main > div > div.box1 > div.btn > select").value=="com"){
                 $.get(
-                    `/todo/${$('input').attr('id')}/alltodo`
+                    `/todo/${$('input.todo').attr('id')}/alltodo`
                 ).done(data => {
-                    $('.box2').empty();
 
+                    str = "";
                     data.forEach(dataGet => {
-                        str = "";
                         if (dataGet['isDone'] == true) {
                             str += `<div class="todo"><div id="content"><div class="todo-do">${dataGet['content'].slice(0, 20)}...</div>`;
-                            str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-check-circle"></i></a><a  onclick="deleteTodo(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
+                            str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input.todo').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-check-circle"></i></a><a  onclick="deleteTodo(\'/todo/${$('input.todo').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
                         }
-                        $('.box2').append(str);
+                        
                     });
+                    $('.box2').empty();
+                    $('.box2').append(str);
                 })
             }else{
                 $.get(
-                    `/todo/${$('input').attr('id')}/alltodo`
+                    `/todo/${$('input.todo').attr('id')}/alltodo`
                 ).done(data => {
-                    $('.box2').empty();
-
+                    str = "";
                     data.forEach(dataGet => {
-                        str = "";
                         if(dataGet['isDone'] == false){
                             str += `<div class="todo"><div id="content"><div class="todo-do">${dataGet['content'].slice(0, 20)}...</div>`;
-                            str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-times-circle"></i></a><a  onclick="deleteTodo(\'/todo/${$('input').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
+                            str += `<div class="todo-date">${dataGet['date']}</div></div><div class="btn"><a onclick="done(\'/todo/${$('input.todo').attr('id')}/${dataGet['_id']}/done\')"><i class="far fa-times-circle"></i></a><a  onclick="deleteTodo(\'/todo/${$('input.todo').attr('id')}/${dataGet['_id']}/deleteTodo\')"><i class="fas fa-trash-alt"></i></a></div></div>`;
                         }
-                        $('.box2').append(str);
                     });
+                    $('.box2').empty();
+                    $('.box2').append(str);
                 })
             }
 
         }
         sort();
+
+        function fileupload(){
+            document.querySelector("body > nav > div:nth-child(2) > form").submit();
+        }
     </script>
 </body>
 </html>
