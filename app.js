@@ -34,17 +34,17 @@ User = new mongoose.model("User", UserSchema);
 
 
 //link->mongodb+srv://ankit:<password>@cluster0-vylte.mongodb.net/test?retryWrites=true&w=majority
-/*
+
 mongoose.connect("mongodb://localhost/TodoAppList", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
-*/
+/*
 mongoose.connect("mongodb+srv://ankit:1234@cluster0-vylte.mongodb.net/test?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
-
+*/
 let Stroage = multer.diskStorage({
     destination : "./public/uploads/",
     filename : (req,file,cb) =>{
